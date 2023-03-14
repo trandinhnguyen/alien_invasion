@@ -28,6 +28,7 @@ class Controller:
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play"""
         mouse_clicked = self.ai_game.play_button.rect.collidepoint(mouse_pos)
+
         if mouse_clicked and not self.ai_game.game_active:
             self._start_game()
 
@@ -65,6 +66,9 @@ class Controller:
         # Reset the game statistics
         self.ai_game.stats.reset_stats()
         self.ai_game.game_active = True
+
+        # Reset the game settings
+        self.ai_game.settings.initialize_dynamic_settings()
 
         # Make a new session
         self.ai_game.reset_session()
