@@ -13,6 +13,8 @@ class GameStats:
         path = Path('high_score.txt')
         try:
             self.high_score = int(path.read_text())
+        except FileNotFoundError:
+            self.high_score = 0
         except ValueError:
             self.high_score = 0
 
