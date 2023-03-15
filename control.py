@@ -13,6 +13,8 @@ class Controller:
         """Watch for keyboard and mouse events"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                # Save high score
+                self.ai_game.stats.save_high_score()
                 sys.exit()
 
             elif event.type == pygame.KEYDOWN:
