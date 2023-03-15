@@ -87,11 +87,19 @@ class AlienInvasion:
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True)
 
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += len(aliens)*self.settings.alien_points
+            self.sb.prep_score()
+            self.sb.check_high_score()
+
         if not self.aliens:
             # Clear all remain bullets, create new fleet and recenter the ship
-            self.reset_session()
+            self.new_level()
 
             # Level up
+            self.stats.level += 1
+            self.sb.prep_level()
             self.settings.increase_speed()
 
     def _update_aliens(self):
@@ -111,8 +119,9 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # Decrement ship left
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
 
-            self.reset_session()
+            self.new_level()
 
             # Pause
             sleep(0.5)
@@ -123,8 +132,8 @@ class AlienInvasion:
             # Show the mouse cursor
             pygame.mouse.set_visible(True)
 
-    def reset_session(self):
-        """Make a new session"""
+    def new_level(self):
+        """Make a new level"""
         # Get rid of any remaining bullets and aliens
         self.bullets.empty()
         self.aliens.empty()

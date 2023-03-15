@@ -65,13 +65,14 @@ class Controller:
         """Start game"""
         # Reset the game statistics
         self.ai_game.stats.reset_stats()
+        self.ai_game.sb.prep_images()
         self.ai_game.game_active = True
 
         # Reset the game settings
         self.ai_game.settings.initialize_dynamic_settings()
 
-        # Make a new session
-        self.ai_game.reset_session()
+        # Make a new level
+        self.ai_game.new_level()
 
         # Hide the mouse cursor
         pygame.mouse.set_visible(False)
