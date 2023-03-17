@@ -11,6 +11,7 @@ from game_stats import GameStats
 from button import Button
 from scoreboard import Scoreboard
 import sound_effects as se
+import time
 
 
 class AlienInvasion:
@@ -52,6 +53,8 @@ class AlienInvasion:
 
     def run_game(self):
         """Start the main loop for the game"""
+        shootTime = time.time_ns()
+
         while True:
             self.controller._check_events()
 
@@ -59,6 +62,10 @@ class AlienInvasion:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
+
+                if (time.time_ns() - shootTime) >= self.settings.shooting_period:
+                    self._fire_bullet()
+                    shootTime = time.time_ns()
 
             self._update_screen()
             self.clock.tick(60)
@@ -68,7 +75,7 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullet_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
-            se.bullet_sound.play()
+            # se.bullet_sound.play()
 
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets"""

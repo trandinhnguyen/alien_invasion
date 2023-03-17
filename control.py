@@ -47,10 +47,10 @@ class Controller:
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
         elif event.key == pygame.K_SPACE:
-            if self.ai_game.game_active:
-                self.ai_game._fire_bullet()
-            else:
+            if not self.ai_game.game_active:
                 self._start_game()
+            # else:
+            #     self.ai_game._fire_bullet()
 
     def _check_keyup_events(self, event):
         """Respond to key releases"""
